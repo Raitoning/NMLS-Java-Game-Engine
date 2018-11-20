@@ -91,7 +91,12 @@ public class SoftwareRenderer {
                 sprite = renderQueue.get(i);
                 projectedPosition = camera.worldToCamera(sprite.getGameObject().getTransform().position());
 
-                x = (int) ((width * projectedPosition.getX()) - sprite.getScaledSprite().getWidth() / 2f);
+                x = (int) ((width * projectedPosition.getX() * camera.getMaxRenderArea().getX()) - sprite.getScaledSprite().getWidth() / 2f);
+
+//                x += (int)(camera.getMinRenderArea().getX() * width);
+//                System.out.println(camera.getMaxRenderArea().getX());
+//                x = (int)((float)x / camera.getMaxRenderArea().getX());
+
                 y = (int) ((height * projectedPosition.getY()) - sprite.getScaledSprite().getHeight() / 2f);
 
                 frameBuffer.drawImage(sprite.getScaledSprite(), null, x, y);
