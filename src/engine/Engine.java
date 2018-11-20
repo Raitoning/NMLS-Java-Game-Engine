@@ -99,7 +99,7 @@ public class Engine {
 
             Time.deltaTime = nanoTimeToFloat() - Time.frameStartTime;
 
-//             System.out.println("FPS: " + ((float)1/Time.deltaTime) + " Frametime: " + Time.deltaTime * 1000 + "ms");
+             System.out.println("FPS: " + ((float)1/Time.deltaTime) + " Frametime: " + Time.deltaTime * 1000 + "ms");
         }
 
         System.exit(0);

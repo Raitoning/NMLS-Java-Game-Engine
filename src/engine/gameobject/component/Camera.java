@@ -31,7 +31,9 @@ public class Camera implements Component {
         minRenderArea = Vector2.zero();
         maxRenderArea = Vector2.one();
 
-        Engine.getInstance().getRenderer().setCamera(this);
+//        Engine.getInstance().getRenderer().setCamera(this);
+
+        Engine.getInstance().getRenderer().addCamera(this);
 
         computeAspectRatio();
         computeVerticalSpirteSizeTarget();
@@ -91,6 +93,11 @@ public class Camera implements Component {
         spriteList.add(value);
     }
 
+    public SpriteRenderer getSprite(int index) {
+
+        return spriteList.get(index);
+    }
+
     public void removeSprite(SpriteRenderer value) {
 
         if(spriteList.contains(value)) {
@@ -139,6 +146,11 @@ public class Camera implements Component {
     public float getVerticalSpriteSizeTarget() {
 
         return verticalSpriteSizeTarget;
+    }
+
+    public int getNumberOfSprites() {
+
+        return spriteList.size();
     }
 
     @Override

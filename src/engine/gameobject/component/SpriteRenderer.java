@@ -41,6 +41,13 @@ public class SpriteRenderer implements Component {
         sprite = resize(SpriteFactory.getInstance().getSprite(name), (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
     }
 
+    public void rescale(float verticalSpriteSizeTarget) {
+
+        float scaleFactor = verticalSpriteSizeTarget / (float)sprite.getWidth();
+
+        sprite = resize(SpriteFactory.getInstance().getSprite(name), (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
+    }
+
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
 
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
