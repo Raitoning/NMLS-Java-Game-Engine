@@ -2,7 +2,7 @@
 
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
-## Engine version: 18.11.17 
+## Engine version: 20.11.17 
 ## Version notes:
 * Missing most of the Javadoc
 * Bug with 0 reproductibility affecting the InputAxis class
