@@ -17,6 +17,8 @@ public class Camera implements Component {
     private GameObject gameObject;
     private Vector2 minRenderArea;
     private Vector2 maxRenderArea;
+    private float aspectRatio;
+    private float verticalSpriteSizeTarget;
 
     public Camera(float orthographicSize, float nearClippingPlane, float farClippingPlane, GameObject gameObject) {
 
@@ -31,7 +33,21 @@ public class Camera implements Component {
 
         Engine.getInstance().getRenderer().setCamera(this);
 
+        computeAspectRatio();
+        computeVerticalSpirteSizeTarget();
+
         spriteList = new ArrayList<>();
+    }
+
+    private void computeAspectRatio() {
+
+        aspectRatio = (maxRenderArea.getX() - minRenderArea.getX()) / (maxRenderArea.getY() - minRenderArea.getY());
+        aspectRatio *= Engine.getInstance().getRenderer().getAspectRatio();
+    }
+
+    private void computeVerticalSpirteSizeTarget() {
+
+        verticalSpriteSizeTarget = ((float)Engine.getInstance().getRenderer().getHeight() * (maxRenderArea.getY() - minRenderArea.getY())) / orthographicSize;
     }
 
     public void setRenderPriority(int value) {
@@ -47,6 +63,9 @@ public class Camera implements Component {
     public void setMinRenderArea(Vector2 minRenderArea) {
 
         this.minRenderArea = minRenderArea;
+
+        computeAspectRatio();
+        computeVerticalSpirteSizeTarget();
     }
 
     public Vector2 getMinRenderArea() {
@@ -57,6 +76,9 @@ public class Camera implements Component {
     public void setMaxRenderArea(Vector2 maxRenderArea) {
 
         this.maxRenderArea = maxRenderArea;
+
+        computeAspectRatio();
+        computeVerticalSpirteSizeTarget();
     }
 
     public Vector2 getMaxRenderArea() {
@@ -79,7 +101,7 @@ public class Camera implements Component {
 
     public Vector2 worldToCamera(Vector3 position) {
 
-        return new Vector2( (((position.getX() - (gameObject.getTransform().position().getX()  - (orthographicSize * Engine.getInstance().getRenderer().getAspectRatio()) / 2)) / (orthographicSize * Engine.getInstance().getRenderer().getAspectRatio()))),
+        return new Vector2( (((position.getX() - (gameObject.getTransform().position().getX()  - (orthographicSize * aspectRatio) / 2)) / (orthographicSize * aspectRatio))),
                 1f - (position.getY()  - (gameObject.getTransform().position().getY()  - orthographicSize / 2)) / orthographicSize);
     }
 
@@ -107,6 +129,16 @@ public class Camera implements Component {
     public float getFarClippingPlane() {
 
         return farClippingPlane;
+    }
+
+    public float getAspectRatio() {
+
+        return aspectRatio;
+    }
+
+    public float getVerticalSpriteSizeTarget() {
+
+        return verticalSpriteSizeTarget;
     }
 
     @Override
