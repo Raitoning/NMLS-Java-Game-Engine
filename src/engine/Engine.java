@@ -45,7 +45,7 @@ public class Engine {
         input = Input.getInstance();
         physics = Physics.getInstance();
 
-        softwareRenderer = new SoftwareRenderer(640,480);
+        softwareRenderer = new SoftwareRenderer(1280,720);
 
         game = new Game();
 

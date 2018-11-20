@@ -3,6 +3,7 @@ package engine;
 import engine.gameobject.GameObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * <h1>Game</h1>
@@ -25,10 +26,6 @@ public class Game {
     public Game() {
 
         gameObjects = new ArrayList<>();
-
-        // First put all your sprite importing code here.
-        // Then put all your physics layers.
-        // And then your GameObject instanciating code.
     }
 
     /** This function is called once every frame and updates every GameObjects in the level.

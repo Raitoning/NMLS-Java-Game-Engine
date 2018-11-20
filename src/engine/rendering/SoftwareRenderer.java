@@ -91,8 +91,11 @@ public class SoftwareRenderer {
                 sprite = renderQueue.get(i);
                 projectedPosition = camera.worldToCamera(sprite.getGameObject().getTransform().position());
 
-                x = (int) ((width * projectedPosition.getX()) - sprite.getScaledSprite().getWidth() / 2f);
-                y = (int) ((height * projectedPosition.getY()) - sprite.getScaledSprite().getHeight() / 2f);
+                x = (int) ((width * projectedPosition.getX() * (camera.getMaxRenderArea().getX() - camera.getMinRenderArea().getX())) - sprite.getScaledSprite().getWidth() / 2f);
+                x += (int)((float) width * camera.getMinRenderArea().getX());
+
+                y = (int) ((height * projectedPosition.getY() * (camera.getMaxRenderArea().getY() - camera.getMinRenderArea().getY())- sprite.getScaledSprite().getHeight() / 2f));
+                y += (int)((float) height * (1f - camera.getMaxRenderArea().getY()));
 
                 frameBuffer.drawImage(sprite.getScaledSprite(), null, x, y);
             }
@@ -113,7 +116,7 @@ public class SoftwareRenderer {
             sprite = sprites.get(i);
             transform = sprite.getGameObject().getTransform();
 
-            if( transform.position().getX() + transform.scale().getX() >= -((camera.getOrthographicSize() * aspectRatio) / 2)+camera.getGameObject().getTransform().position().getX() && transform.position().getX() - transform.scale().getX() <= ((camera.getOrthographicSize() * aspectRatio)/ 2) + camera.getGameObject().getTransform().position().getX()) {
+            if( transform.position().getX() + transform.scale().getX() >= -((camera.getOrthographicSize() * camera.getAspectRatio()) / 2)+camera.getGameObject().getTransform().position().getX() && transform.position().getX() - transform.scale().getX() <= ((camera.getOrthographicSize() * camera.getAspectRatio())/ 2) + camera.getGameObject().getTransform().position().getX()) {
 
 
                 if(transform.position().getY() + transform.scale().getY() >= -(camera.getOrthographicSize() / 2)+camera.getGameObject().getTransform().position().getY() && transform.position().getY() - transform.scale().getY() <= (camera.getOrthographicSize() /2)+camera.getGameObject().getTransform().position().getY()) {
@@ -187,7 +190,8 @@ public class SoftwareRenderer {
      */
     public float getVerticalSpriteSizeTarget() {
 
-        return verticalSpriteSizeTarget;
+//        return verticalSpriteSizeTarget * (camera.getMaxRenderArea().getX() - camera.getMinRenderArea().getX());
+        return camera.getVerticalSpriteSizeTarget();
     }
 
     /** Get the camera used for rendering.

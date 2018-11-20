@@ -82,4 +82,9 @@ public class Vector2 {
 
         return new Vector2(1f, 1f);
     }
+
+    public String toString() {
+
+        return "(X: " + x + "; Y: " + y + ")";
+    }
 }
