@@ -35,8 +35,6 @@ public class Camera implements Component {
 
         computeAspectRatio();
         computeVerticalSpirteSizeTarget();
-
-        spriteList = new ArrayList<>();
     }
 
     private void computeAspectRatio() {
@@ -84,19 +82,6 @@ public class Camera implements Component {
     public Vector2 getMaxRenderArea() {
 
         return maxRenderArea;
-    }
-
-    public void addSprite(SpriteRenderer value) {
-
-        spriteList.add(value);
-    }
-
-    public void removeSprite(SpriteRenderer value) {
-
-        if(spriteList.contains(value)) {
-
-            spriteList.remove(value);
-        }
     }
 
     public Vector2 worldToCamera(Vector3 position) {

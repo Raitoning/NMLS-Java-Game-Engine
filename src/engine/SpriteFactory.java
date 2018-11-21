@@ -1,7 +1,9 @@
 package engine;
 
 import engine.exception.UnreferencedSpriteException;
+import engine.gameobject.GameObject;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -74,6 +76,43 @@ public class SpriteFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // WORKAROUND: Added 1 pixel in each dimension to get rid of random black bars appearing between sprites.
+    public BufferedImage getScaledSprite(String name, GameObject gameObject) {
+
+        String scaledInstanceName = "_scaled" + name + "_" + Engine.getInstance().getRenderer().getCamera().getOrthographicSize() + "_" + gameObject.getTransform().scale();
+
+        // Check if the sprite has already been loaded
+        for (int i = 0; i < sprites.size(); i++) {
+
+            if(sprites.get(i).getName().equals(scaledInstanceName)) {
+
+                return sprites.get(i).getSprite();
+            }
+        }
+
+        BufferedImage sprite = getSprite(name);
+
+        float scaleFactor = Engine.getInstance().getRenderer().getVerticalSpriteSizeTarget() / (float)sprite.getWidth();
+
+        sprite =resize(sprite, (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
+
+        sprites.add(new SpriteReference(scaledInstanceName, sprite));
+
+        return sprite;
+    }
+
+    public BufferedImage resize(BufferedImage img, int newW, int newH) {
+
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
     }
 
     /** Get the unique instance of the Factory.
