@@ -38,6 +38,12 @@ public class SpriteReference {
         }
     }
 
+    public SpriteReference(String name, BufferedImage sprite) {
+
+        this.name = name;
+        this.sprite = sprite;
+    }
+
     /** Get the name of the sprite.
      *
      * @return The name of the sprite.

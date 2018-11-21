@@ -1,5 +1,6 @@
 package engine.rendering;
 
+import engine.SpriteFactory;
 import engine.Vector2;
 import engine.gameobject.component.Camera;
 import engine.gameobject.component.Transform;
@@ -37,7 +38,7 @@ public class SoftwareRenderer {
     private ArrayList<SpriteRenderer> renderQueue;
     private float aspectRatio;
     private Camera camera;
-    private float verticalSpriteSizeTarget;
+
     private ArrayList<Camera> cameras;
 
     /** Constructs a new SoftwareRenderer with the desired width and height of the rendering zone.
@@ -73,63 +74,30 @@ public class SoftwareRenderer {
      */
     public void update() {
 
-        /* if(camera == null) {
+        cull();
+        zSort();
 
-            Arrays.fill(rawFrameBuffer, CLEARCOLOR);
-        } else {
+        Arrays.fill(rawFrameBuffer, CLEARCOLOR);
 
-            cull();
-            zSort();
+        int x;
+        int y;
+        SpriteRenderer sprite;
+        Vector2 projectedPosition;
 
-            Arrays.fill(rawFrameBuffer, CLEARCOLOR);
+        for (int i = renderQueue.size() - 1; i > -1; i--) {
 
-            int x;
-            int y;
-            SpriteRenderer sprite;
-            Vector2 projectedPosition;
+            sprite = renderQueue.get(i);
+            projectedPosition = camera.worldToCamera(sprite.getGameObject().getTransform().position());
 
-            for (int i = renderQueue.size() - 1; i > -1; i--) {
+            BufferedImage spriteToRender = SpriteFactory.getInstance().getScaledSprite(sprite.getName(), sprite.getGameObject());
 
-                sprite = renderQueue.get(i);
-                projectedPosition = camera.worldToCamera(sprite.getGameObject().getTransform().position());
+            x = (int) ((width * projectedPosition.getX() * (camera.getMaxRenderArea().getX() - camera.getMinRenderArea().getX())) - spriteToRender.getWidth() / 2f);
+            x += (int)((float) width * camera.getMinRenderArea().getX());
 
-                x = (int) ((width * projectedPosition.getX() * (camera.getMaxRenderArea().getX() - camera.getMinRenderArea().getX())) - sprite.getScaledSprite().getWidth() / 2f);
-                x += (int)((float) width * camera.getMinRenderArea().getX());
+            y = (int) ((height * projectedPosition.getY() * (camera.getMaxRenderArea().getY() - camera.getMinRenderArea().getY()) - spriteToRender.getHeight() / 2f));
+            y += (int)((float) height * (1f - camera.getMaxRenderArea().getY()));
 
-                y = (int) ((height * projectedPosition.getY() * (camera.getMaxRenderArea().getY() - camera.getMinRenderArea().getY())- sprite.getScaledSprite().getHeight() / 2f));
-                y += (int)((float) height * (1f - camera.getMaxRenderArea().getY()));
-
-                frameBuffer.drawImage(sprite.getScaledSprite(), null, x, y);
-            }
-        } */
-
-        for (int i = 0; i < cameras.size(); i++) {
-
-            verticalSpriteSizeTarget = height / cameras.get(i).getOrthographicSize();
-
-            cull(cameras.get(i));
-            zSort();
-
-            Arrays.fill(rawFrameBuffer, CLEARCOLOR);
-
-            int x;
-            int y;
-            SpriteRenderer sprite;
-            Vector2 projectedPosition;
-
-            for (int j = renderQueue.size() - 1; j > -1; j--) {
-
-                sprite = renderQueue.get(i);
-                projectedPosition = cameras.get(i).worldToCamera(sprite.getGameObject().getTransform().position());
-
-                x = (int) ((width * projectedPosition.getX() * (cameras.get(i).getMaxRenderArea().getX() - cameras.get(i).getMinRenderArea().getX())) - sprite.getScaledSprite().getWidth() / 2f);
-                x += (int) ((float) width * cameras.get(i).getMinRenderArea().getX());
-
-                y = (int) ((height * projectedPosition.getY() * (cameras.get(i).getMaxRenderArea().getY() - cameras.get(i).getMinRenderArea().getY()) - sprite.getScaledSprite().getHeight() / 2f));
-                y += (int) ((float) height * (1f - cameras.get(i).getMaxRenderArea().getY()));
-
-                frameBuffer.drawImage(sprite.getScaledSprite(), null, x, y);
-            }
+            frameBuffer.drawImage(spriteToRender, null, x, y);
         }
 
         window.repaint();
@@ -203,7 +171,6 @@ public class SoftwareRenderer {
     public void addSpriteToQueue(SpriteRenderer sprite) {
 
         sprites.add(sprite);
-        sprite.rescale();
     }
 
     /** Remove a sprite from the rendering list.
@@ -227,53 +194,13 @@ public class SoftwareRenderer {
         return aspectRatio;
     }
 
-    /** Set the camera used to render its content.
-     *
-     * @param camera The camera to use for rendering.
-     */
-    public void setCamera(Camera camera) {
-
-        this.camera = camera;
-
-        verticalSpriteSizeTarget = (float)(height) / camera.getOrthographicSize();
-
-        for (int i = 0; i < sprites.size(); i++) {
-
-            sprites.get(i).rescale();
-        }
-    }
-
-    public void addCamera(Camera value) {
-
-        if(!cameras.contains(value)) {
-
-            cameras.add(value);
-            for (int i = 0; i < sprites.size(); i++) {
-
-                value.addSprite(sprites.get(i));
-            }
-            rescaleSprites(value);
-        }
-    }
-
-    public void removeCamera(Camera value) {
-
-        if(cameras.contains(value)) {
-
-            cameras.remove(value);
-        }
-    }
-
     /** Get the vertical size targeted when rescaling sprites.
      *
      * @return
      */
     public float getVerticalSpriteSizeTarget() {
-
-//        return verticalSpriteSizeTarget * (camera.getMaxRenderArea().getX() - camera.getMinRenderArea().getX());
-//        return camera.getVerticalSpriteSizeTarget();
-
-        return verticalSpriteSizeTarget;
+      
+        return camera.getVerticalSpriteSizeTarget();
     }
 
     /** Get the camera used for rendering.
@@ -283,6 +210,15 @@ public class SoftwareRenderer {
     public Camera getCamera() {
 
         return camera;
+    }
+
+    /** Set the camera used to render its content.
+     *
+     * @param camera The camera to use for rendering.
+     */
+    public void setCamera(Camera camera) {
+
+        this.camera = camera;
     }
 
     /** Get the width of the rendering zone.
