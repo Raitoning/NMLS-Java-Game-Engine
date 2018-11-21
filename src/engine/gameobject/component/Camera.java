@@ -31,7 +31,7 @@ public class Camera implements Component {
         minRenderArea = Vector2.zero();
         maxRenderArea = Vector2.one();
 
-        Engine.getInstance().getRenderer().addCamera(this);
+        Engine.getInstance().getRenderer().setCamera(this);
 
         computeAspectRatio();
         computeVerticalSpirteSizeTarget();
@@ -124,11 +124,6 @@ public class Camera implements Component {
     public float getVerticalSpriteSizeTarget() {
 
         return verticalSpriteSizeTarget;
-    }
-
-    public int getNumberOfSprites() {
-
-        return spriteList.size();
     }
 
     @Override
