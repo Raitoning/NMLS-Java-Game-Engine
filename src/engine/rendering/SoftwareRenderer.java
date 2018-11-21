@@ -38,6 +38,7 @@ public class SoftwareRenderer {
     private ArrayList<SpriteRenderer> renderQueue;
     private float aspectRatio;
     private Camera camera;
+
     private ArrayList<Camera> cameras;
 
     /** Constructs a new SoftwareRenderer with the desired width and height of the rendering zone.
@@ -96,7 +97,6 @@ public class SoftwareRenderer {
             y = (int) ((height * projectedPosition.getY() * (camera.getMaxRenderArea().getY() - camera.getMinRenderArea().getY()) - spriteToRender.getHeight() / 2f));
             y += (int)((float) height * (1f - camera.getMaxRenderArea().getY()));
 
-
             frameBuffer.drawImage(spriteToRender, null, x, y);
         }
 
@@ -123,6 +123,34 @@ public class SoftwareRenderer {
                     if(transform.position().getZ() >= camera.getNearClippingPlane() && transform.position().getZ() <= camera.getFarClippingPlane()) {
 
                     renderQueue.add(sprite);
+                    }
+                }
+            }
+        }
+
+//         System.out.println("Sprite to render: " + renderQueue.size());
+    }
+
+    private void cull(Camera cameraToCull) {
+
+        renderQueue.clear();
+
+        SpriteRenderer sprite;
+        Transform transform;
+
+        for (int i = 0; i < sprites.size(); i++) {
+
+            sprite = sprites.get(i);
+            transform = sprite.getGameObject().getTransform();
+
+            if( transform.position().getX() + transform.scale().getX() >= -((cameraToCull.getOrthographicSize() * cameraToCull.getAspectRatio()) / 2)+cameraToCull.getGameObject().getTransform().position().getX() && transform.position().getX() - transform.scale().getX() <= ((cameraToCull.getOrthographicSize() * cameraToCull.getAspectRatio())/ 2) + cameraToCull.getGameObject().getTransform().position().getX()) {
+
+
+                if(transform.position().getY() + transform.scale().getY() >= -(cameraToCull.getOrthographicSize() / 2)+cameraToCull.getGameObject().getTransform().position().getY() && transform.position().getY() - transform.scale().getY() <= (cameraToCull.getOrthographicSize() /2)+cameraToCull.getGameObject().getTransform().position().getY()) {
+
+                    if(transform.position().getZ() >= cameraToCull.getNearClippingPlane() && transform.position().getZ() <= cameraToCull.getFarClippingPlane()) {
+
+                        renderQueue.add(sprite);
                     }
                 }
             }
@@ -171,7 +199,7 @@ public class SoftwareRenderer {
      * @return
      */
     public float getVerticalSpriteSizeTarget() {
-
+      
         return camera.getVerticalSpriteSizeTarget();
     }
 
@@ -209,5 +237,13 @@ public class SoftwareRenderer {
     public int getHeight() {
 
         return height;
+    }
+
+    private void rescaleSprites(Camera camera) {
+
+        for (int i = 0; i < camera.getNumberOfSprites(); i++) {
+
+            camera.getSprite(i).rescale();
+        }
     }
 }
