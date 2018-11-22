@@ -4,6 +4,9 @@
 ## Development phase: PRE-ALPHA
 ## Engine version: 20.11.17 
 ## Version notes:
+* Massive memory footprint reduction (reduced by half)
+* Reworked the way are handled by the engine. 
+* Code cleanup
 * Missing most of the Javadoc
 * Bug with 0 reproductibility affecting the InputAxis class
 
