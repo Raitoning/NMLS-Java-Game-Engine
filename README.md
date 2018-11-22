@@ -2,7 +2,7 @@
 
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
-## Engine version: 21.11.17 
+## Engine version: 18.11.21 
 ## Version notes:
 * Massive memory footprint reduction (reduced by half)
 * Reworked the way are handled by the engine. 
