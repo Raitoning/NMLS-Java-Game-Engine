@@ -9,7 +9,7 @@ package engine;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Vector3.html">https://docs.unity3d.com/ScriptReference/Vector3.html</a>
  *
  * @author  Raitoning
- * @version 2018-11-14
+ * @version 2018-11-22
  * @since   2018-11-14
  */
 public class Vector3 {
@@ -103,6 +103,10 @@ public class Vector3 {
         return new Vector3(1f, 1f, 1f);
     }
 
+    /** Return a readable string of the Vector3 values.
+     *
+     * @return Return a readable string of the Vector3 values.
+     */
     @Override
     public String toString() {
 

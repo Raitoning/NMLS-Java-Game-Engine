@@ -84,7 +84,7 @@ public class MouseInput extends MouseAdapter {
 
     private void raycast(Vector2 coordinates) {
 
-        Vector2 worldCoordinates = Engine.getInstance().getRenderer().getCamera().cameraToWorld(coordinates);
+        Vector2 worldCoordinates = Engine.getInstance().getRenderer().getActiveCamera().cameraToWorld(coordinates);
 
         for (int i = 0; i < listeners.size(); i++) {
 

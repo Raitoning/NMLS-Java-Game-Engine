@@ -9,7 +9,7 @@ package engine;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Vector2.html">https://docs.unity3d.com/ScriptReference/Vector2.html</a>
  *
  * @author  Raitoning
- * @version 2018-11-14
+ * @version 2018-11-22
  * @since   2018-11-14
  */
 public class Vector2 {
@@ -83,6 +83,10 @@ public class Vector2 {
         return new Vector2(1f, 1f);
     }
 
+    /** Return a readable string of the Vector2 values.
+     *
+     * @return Return a readable string of the Vector2 values.
+     */
     public String toString() {
 
         return "(X: " + x + "; Y: " + y + ")";
