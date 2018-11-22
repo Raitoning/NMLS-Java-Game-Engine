@@ -31,10 +31,10 @@ public class Camera implements Component {
         minRenderArea = Vector2.zero();
         maxRenderArea = Vector2.one();
 
-        Engine.getInstance().getRenderer().setCamera(this);
+        Engine.getInstance().getRenderer().setActiveCamera(this);
 
         computeAspectRatio();
-        computeVerticalSpirteSizeTarget();
+        computeVerticalSpriteSizeTarget();
     }
 
     private void computeAspectRatio() {
@@ -43,7 +43,7 @@ public class Camera implements Component {
         aspectRatio *= Engine.getInstance().getRenderer().getAspectRatio();
     }
 
-    private void computeVerticalSpirteSizeTarget() {
+    private void computeVerticalSpriteSizeTarget() {
 
         verticalSpriteSizeTarget = ((float)Engine.getInstance().getRenderer().getHeight() * (maxRenderArea.getY() - minRenderArea.getY())) / orthographicSize;
     }
@@ -63,7 +63,7 @@ public class Camera implements Component {
         this.minRenderArea = minRenderArea;
 
         computeAspectRatio();
-        computeVerticalSpirteSizeTarget();
+        computeVerticalSpriteSizeTarget();
     }
 
     public Vector2 getMinRenderArea() {
@@ -76,7 +76,7 @@ public class Camera implements Component {
         this.maxRenderArea = maxRenderArea;
 
         computeAspectRatio();
-        computeVerticalSpirteSizeTarget();
+        computeVerticalSpriteSizeTarget();
     }
 
     public Vector2 getMaxRenderArea() {
@@ -132,6 +132,6 @@ public class Camera implements Component {
         spriteList.clear();
         spriteList = null;
         gameObject = null;
-        Engine.getInstance().getRenderer().setCamera(null);
+        Engine.getInstance().getRenderer().setActiveCamera(null);
     }
 }

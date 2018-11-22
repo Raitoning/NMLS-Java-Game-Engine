@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * </p>
  *
  * @author  Raitoning
- * @version 2018-11-14
+ * @version 2018-11-22
  * @since   2018-11-14
  */
 public class SpriteFactory {
@@ -78,10 +78,16 @@ public class SpriteFactory {
         return null;
     }
 
+    /** Get a rescaled sprite given it's name. Check if it's already loaded or load it first.
+     *  May throw an UnreferencedSpriteException and return null if the sprite doesn't exists.
+     *
+     * @param name The name of the desired rescaled sprite
+     * @return  The BufferedImage of the rescaled sprite or null if it doesn't exists.
+     */
     // WORKAROUND: Added 1 pixel in each dimension to get rid of random black bars appearing between sprites.
     public BufferedImage getScaledSprite(String name, GameObject gameObject) {
 
-        String scaledInstanceName = "_scaled" + name + "_" + Engine.getInstance().getRenderer().getCamera().getOrthographicSize() + "_" + gameObject.getTransform().scale();
+        String scaledInstanceName = "_scaled" + name + "_" + Engine.getInstance().getRenderer().getActiveCamera().getOrthographicSize() + "_" + gameObject.getTransform().scale() + "_" + Engine.getInstance().getRenderer().getActiveCamera();
 
         // Check if the sprite has already been loaded
         for (int i = 0; i < sprites.size(); i++) {
@@ -96,14 +102,14 @@ public class SpriteFactory {
 
         float scaleFactor = Engine.getInstance().getRenderer().getVerticalSpriteSizeTarget() / (float)sprite.getWidth();
 
-        sprite =resize(sprite, (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
+        sprite = resize(sprite, (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
 
         sprites.add(new SpriteReference(scaledInstanceName, sprite));
 
         return sprite;
     }
 
-    public BufferedImage resize(BufferedImage img, int newW, int newH) {
+    private BufferedImage resize(BufferedImage img, int newW, int newH) {
 
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
