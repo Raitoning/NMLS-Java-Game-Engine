@@ -2,16 +2,21 @@
 
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
-## Engine version: 20.11.17 
+## Engine version: 18.11.22 
 ## Version notes:
-* Missing most of the Javadoc
-* Bug with 0 reproductibility affecting the InputAxis class
+* Cameras can now be rendered on a specific part of the viewport.
+* Cameras are now rendered on the screen via render textures. They are in fact rendered on BufferedImages before blitting them on the final frame buffer.
+* The engine can now render multiple cameras at once.
+* Cameras are sorted and rendered by their render priority (lower is more important).
+* Updated some Javadoc.
+* Missing most of the Javadoc.
+* Bug with 0 reproductibility affecting the InputAxis class.
 
 # ROADMAP:
-* Adding a Scene system similar to Unity
-* Adding a layering system for multiple cameras
-* Adding a Collision Matrix to get better control over physics simulations
-* Adding an Audio subsystem
+* Adding a Scene system similar to Unity.
+* [x] Adding a layering system for multiple cameras.
+* Adding a Collision Matrix to get better control over physics simulations.
+* Adding an Audio subsystem.
 
 Welcome to Namaeless Studio's Mini Java Game Engine official repository !  
 Here you will find the lastest released version of the game engine.  
