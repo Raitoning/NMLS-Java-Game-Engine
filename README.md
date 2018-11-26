@@ -3,17 +3,17 @@
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
 
-## Engine version: 18.11.22 
+## Engine version: 18.11.26
 ## Version notes:
-* Cameras can now be rendered on a specific part of the viewport.
-* Cameras are now rendered on the screen via render textures. They are in fact rendered on BufferedImages before blitting them on the final frame buffer.
-* The engine can now render multiple cameras at once.
-* Cameras are sorted and rendered by their render priority (lower is more important).
-* Updated some Javadoc.
-* Missing most of the Javadoc.
-* Bug with 0 reproductibility affecting the InputAxis class.
+* Fixed a bug where collisions between some layers wouldn't happen.
+* Added a linear interpolation (lerp) function in Mathf.
+* Added Javadoc for SpriteRenderer.
+* Added a function to change the sprite name in Sprite Renderer.
+* Updated Javadoc.
+* Marked some functions as deprecated because they are still experimental and under development.
 
 # ROADMAP:
+* Adapting the GraphicRaycaster Component to the multiple camera system.
 * Adding a Scene system similar to Unity.
 * [x] Adding a layering system for multiple cameras.
 * Adding a Collision Matrix to get better control over physics simulations.
