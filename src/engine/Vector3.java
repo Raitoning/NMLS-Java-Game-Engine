@@ -9,8 +9,8 @@ package engine;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Vector3.html">https://docs.unity3d.com/ScriptReference/Vector3.html</a>
  *
  * @author  Raitoning
- * @version 2018-11-22
- * @since   2018-11-14
+ * @version 2018.11.22
+ * @since   2018.11.14
  */
 public class Vector3 {
 

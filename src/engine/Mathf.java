@@ -6,8 +6,8 @@ package engine;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Mathf.html">https://docs.unity3d.com/ScriptReference/Mathf.html</a>
  *
  * @author  Raitoning
- * @version 2018-11-14
- * @since   2018-11-14
+ * @version 2018.11.26
+ * @since   2018.11.14
  */
 public class Mathf {
 
@@ -29,5 +29,17 @@ public class Mathf {
         }
 
         return in;
+    }
+
+    /** Linearly interpolates between a and b by t.
+     *
+     * @param a The value to interpolate from.
+     * @param b The value to interpolate to.
+     * @param t The value by how much to interpolate.
+     * @return The interpolated value.
+     */
+    public static float lerp(float a, float b, float t) {
+
+        return (1 - t) * a + t * b;
     }
 }

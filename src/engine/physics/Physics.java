@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Physics.html">https://docs.unity3d.com/ScriptReference/Physics.html</a>
  *
  * @author  Raitoning
- * @version 2018-11-14
- * @since   2018-11-14
+ * @version 2018.11.26
+ * @since   2018.11.14
  */
 public class Physics {
 
@@ -41,19 +41,23 @@ public class Physics {
 
         for (int i = 0; i < layers.size() - 1; i++) {
 
-            for (int j = 0; j < layers.get(i).size(); j++) {
+            for (int j = i + 1; j < layers.size(); j++) {
 
-                Collider a = layers.get(i).getCollider(j);
+                for (int k = 0; k < layers.get(i).size(); k++) {
 
-                for (int k = 0; k < layers.get(i + 1).size(); k++) {
+                    Collider a = layers.get(i).getCollider(k);
 
-                    Collider b = layers.get(i + 1).getCollider(k);
+                    for (int l = 0; l < layers.get(j).size(); l++) {
 
-                    boxCollision((BoxCollider2D)a, (BoxCollider2D) b);
+                        Collider b = layers.get(j).getCollider(l);
+
+                        boxCollision((BoxCollider2D)a, (BoxCollider2D) b);
+                    }
                 }
             }
         }
     }
+
 
     private boolean doBoxesIntersect(BoxCollider2D a, BoxCollider2D b) {
 
@@ -143,19 +147,17 @@ public class Physics {
 
                 }
 
-//                if(b.isTrigger()) {
-//
+                if(b.isTrigger()) {
+
 //                    if(!triggeredColliders.contains(b)) {
 //
 //                        triggeredColliders.add(b);
 //                        b.onTriggerEnter2D(a);
 //                    } else {
-//
-//                        b.onTriggerStay2D(a);
-//                    }
-//                }
 
-                b.onTriggerStay2D(a);
+                        b.onTriggerStay2D(a);
+//                    }
+                }
             }
         } else {
 

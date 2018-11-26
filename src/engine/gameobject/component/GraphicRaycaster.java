@@ -3,6 +3,7 @@ package engine.gameobject.component;
 import engine.gameobject.GameObject;
 import engine.input.Input;
 
+// TODO: Update this to support multi camera rendering.
 public class GraphicRaycaster implements Component {
 
     private GameObject gameObject;

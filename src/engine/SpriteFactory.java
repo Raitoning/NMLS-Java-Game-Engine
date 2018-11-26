@@ -16,8 +16,8 @@ import java.util.ArrayList;
  * </p>
  *
  * @author  Raitoning
- * @version 2018-11-22
- * @since   2018-11-14
+ * @version 2018.11.22
+ * @since   2018.11.14
  */
 public class SpriteFactory {
 

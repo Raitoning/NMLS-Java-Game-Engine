@@ -1,7 +1,6 @@
 package engine.physics;
 
 import engine.gameobject.component.Collider;
-
 import java.util.ArrayList;
 
 /**
@@ -10,8 +9,8 @@ import java.util.ArrayList;
  * <p>
  *
  * @author  Raitoning
- * @version 2018-11-14
- * @since   2018-11-14
+ * @version 2018.11.14
+ * @since   2018.11.14
  */
 public class PhysicsLayer {
 
