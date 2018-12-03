@@ -3,21 +3,18 @@
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
 
-## Engine version: 18.11.26
+## Engine version: 18.12.03
 ## Version notes:
-* Fixed a bug where collisions between some layers wouldn't happen.
-* Added a linear interpolation (lerp) function in Mathf.
-* Added Javadoc for SpriteRenderer.
-* Added a function to change the sprite name in Sprite Renderer.
-* Updated Javadoc.
-* Marked some functions as deprecated because they are still experimental and under development.
+* Adapted the click raycast mechanism to work with multiple cameras.
+* Code cleanup.
 
 # ROADMAP:
-* Adapting the GraphicRaycaster Component to the multiple camera system.
-* Adding a Scene system similar to Unity.
-* [x] Adding a layering system for multiple cameras.
-* Adding a Collision Matrix to get better control over physics simulations.
-* Adding an Audio subsystem.
+- [x] Adapting the GraphicRaycaster Component to the multiple camera system.
+- [x] Adding a layering system for multiple cameras.
+- [ ] Adding a Scene system similar to Unity.
+- [ ] Adding a Collision Matrix to get better control over physics simulations.
+- [ ] Adding an Audio subsystem.
+
 
 Welcome to Namaeless Studio's Mini Java Game Engine official repository !  
 Here you will find the lastest released version of the game engine.  
