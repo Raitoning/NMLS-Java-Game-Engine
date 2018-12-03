@@ -3,7 +3,6 @@ package engine;
 import engine.gameobject.GameObject;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * <h1>Game</h1>
@@ -13,8 +12,8 @@ import java.util.Random;
  * </p>
  *
  * @author  Raitoning
- * @version 2018-11-14
- * @since   2018-11-14
+ * @version 2018.12.03
+ * @since   2018.11.14
  */
 public class Game {
 
@@ -33,19 +32,19 @@ public class Game {
      */
     public void update() {
 
-        for (int i = 0; i < gameObjects.size(); i++) {
+        for (GameObject gameObject : gameObjects) {
 
-            gameObjects.get(i).update();
+            gameObject.update();
         }
     }
 
     public GameObject findGameObjectByName(String name) {
 
-        for (int i = 0; i < gameObjects.size(); i++) {
+        for (GameObject gameObject : gameObjects) {
 
-            if (gameObjects.get(i).getName().equals(name)) {
+            if (gameObject.getName().equals(name)) {
 
-                return gameObjects.get(i);
+                return gameObject;
             }
         }
 

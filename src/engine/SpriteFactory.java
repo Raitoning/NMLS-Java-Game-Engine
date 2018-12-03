@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.11.22
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class SpriteFactory {
 
-    public static SpriteFactory instance;
+    private static SpriteFactory instance;
 
     private ArrayList<FileReference> fileReferences;
     private ArrayList<SpriteReference> sprites;
@@ -37,7 +37,7 @@ public class SpriteFactory {
      * @param name The desired name for the sprite.
      * @param path The path to the file containing the sprite.
      */
-    public void addSprite(String name, String path) {
+    void addSprite(String name, String path) {
 
         fileReferences.add(new FileReference(name, path));
     }
@@ -48,23 +48,23 @@ public class SpriteFactory {
      * @param name The name of the desired sprite
      * @return  The BufferedImage of the sprite or null if it doesn't exists.
      */
-    public BufferedImage getSprite(String name) {
+    private BufferedImage getSprite(String name) {
 
         // Check if the sprite has already been loaded
-        for (int i = 0; i < sprites.size(); i++) {
+        for (SpriteReference sprite : sprites) {
 
-            if(sprites.get(i).getName().equals(name)) {
+            if (sprite.getName().equals(name)) {
 
-                return sprites.get(i).getSprite();
+                return sprite.getSprite();
             }
         }
 
         // if not already loaded, check if it's referenced and load it
-        for (int i = 0; i < fileReferences.size(); i++) {
+        for (FileReference fileReference : fileReferences) {
 
-            if (fileReferences.get(i).getName().equals(name)) {
+            if (fileReference.getName().equals(name)) {
 
-                sprites.add(new SpriteReference(name, fileReferences.get(i).getPath()));
+                sprites.add(new SpriteReference(name, fileReference.getPath()));
                 return getSprite(name);
             }
         }
@@ -90,19 +90,24 @@ public class SpriteFactory {
         String scaledInstanceName = "_scaled" + name + "_" + Engine.getInstance().getRenderer().getActiveCamera().getOrthographicSize() + "_" + gameObject.getTransform().scale() + "_" + Engine.getInstance().getRenderer().getActiveCamera();
 
         // Check if the sprite has already been loaded
-        for (int i = 0; i < sprites.size(); i++) {
+        for (SpriteReference sprite1 : sprites) {
 
-            if(sprites.get(i).getName().equals(scaledInstanceName)) {
+            if (sprite1.getName().equals(scaledInstanceName)) {
 
-                return sprites.get(i).getSprite();
+                return sprite1.getSprite();
             }
         }
 
         BufferedImage sprite = getSprite(name);
 
-        float scaleFactor = Engine.getInstance().getRenderer().getVerticalSpriteSizeTarget() / (float)sprite.getWidth();
+        float scaleFactor;
 
-        sprite = resize(sprite, (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
+        if (sprite != null) {
+
+            scaleFactor = Engine.getInstance().getRenderer().getVerticalSpriteSizeTarget() / (float)sprite.getWidth();
+
+            sprite = resize(sprite, (int)(sprite.getWidth() * scaleFactor * gameObject.getTransform().scale().getX()) + 1, (int)(sprite.getHeight() * scaleFactor * gameObject.getTransform().scale().getY()) + 1);
+        }
 
         sprites.add(new SpriteReference(scaledInstanceName, sprite));
 

@@ -8,7 +8,7 @@ package engine;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.11.14
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class FileReference {
@@ -21,7 +21,7 @@ public class FileReference {
      * @param name  The desired name.
      * @param path  The path to the file.
      */
-    public FileReference(String name, String path) {
+    FileReference(String name, String path) {
 
         this.name = name;
         this.path = path;
@@ -40,7 +40,7 @@ public class FileReference {
      *
      * @return  The path of the referenced file.
      */
-    public String getPath() {
+    String getPath() {
 
         return path;
     }

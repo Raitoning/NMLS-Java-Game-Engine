@@ -18,5 +18,5 @@ public interface Component {
     /** Destroy the component by nullifying every of it's components and references.
      *
      */
-    public void destroy();
+    void destroy();
 }

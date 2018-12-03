@@ -14,7 +14,7 @@ import java.io.IOException;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.11.14
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class SpriteReference {
@@ -27,7 +27,7 @@ public class SpriteReference {
      * @param name Desired name for the sprite.
      * @param path Path of the file to use.
      */
-    public SpriteReference(String name, String path) {
+    SpriteReference(String name, String path) {
 
         this.name = name;
 
@@ -38,7 +38,7 @@ public class SpriteReference {
         }
     }
 
-    public SpriteReference(String name, BufferedImage sprite) {
+    SpriteReference(String name, BufferedImage sprite) {
 
         this.name = name;
         this.sprite = sprite;
@@ -56,7 +56,7 @@ public class SpriteReference {
      *
      * @return The BufferedImage of the sprite.
      */
-    public BufferedImage getSprite() {
+    BufferedImage getSprite() {
         return sprite;
     }
 }

@@ -15,15 +15,16 @@ import java.util.ArrayList;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/GameObject.html">https://docs.unity3d.com/ScriptReference/GameObject.html</a>
  *
  * @author  Raitoning
- * @version 2018.11.26
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class GameObject {
 
     protected String name;
-    protected String tag;
     protected Transform transform;
     protected ArrayList<Component> components;
+
+    private String tag;
 
     /** Constructs a new GameObject, with default name.
      * Transform is always added to the GameObject that is being created. The version with just a single string argument just adds this and the Transform. Finally, the third version allows the name to be specified but also coordinates to be passed.
@@ -144,11 +145,11 @@ public class GameObject {
      */
     public Component getComponent(Class typeOfComponent) {
 
-        for (int i = 0; i < components.size(); i++) {
+        for (Component component : components) {
 
-            if (components.get(i).getClass() == typeOfComponent) {
+            if (component.getClass() == typeOfComponent) {
 
-                return components.get(i);
+                return component;
             }
         }
 
@@ -171,9 +172,9 @@ public class GameObject {
      */
     public void destroy() {
 
-        for (int i = 0; i < components.size(); i++) {
+        for (Component component : components) {
 
-            components.get(i).destroy();
+            component.destroy();
         }
     }
 }

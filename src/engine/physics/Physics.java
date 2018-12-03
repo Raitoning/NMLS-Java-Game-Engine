@@ -14,12 +14,12 @@ import java.util.ArrayList;
  * <b>Note:</b> <a href="https://docs.unity3d.com/ScriptReference/Physics.html">https://docs.unity3d.com/ScriptReference/Physics.html</a>
  *
  * @author  Raitoning
- * @version 2018.11.26
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class Physics {
 
-    public static Physics instance;
+    private static Physics instance;
 
     private ArrayList<PhysicsLayer> layers;
 
@@ -159,7 +159,7 @@ public class Physics {
 //                    }
                 }
             }
-        } else {
+        }
 
 //            if(a.isTrigger()) {
 //
@@ -178,7 +178,6 @@ public class Physics {
 //                    b.onTriggerExit2D(a);
 //                }
 //            }
-        }
     }
 
     /** Add a Collider to the specified PhysicsLayer. May throw an UnknownPhysicsLayerException if the PhysicsLayer doesn't exists.
@@ -189,11 +188,11 @@ public class Physics {
     public void addCollider(Collider collider, String layerName) {
 
         // If the layer exists, add the collider in it.
-        for (int i = 0; i < layers.size(); i++) {
+        for (PhysicsLayer layer : layers) {
 
-            if(layers.get(i).getName().equals(layerName)) {
+            if (layer.getName().equals(layerName)) {
 
-                layers.get(i).addCollider(collider);
+                layer.addCollider(collider);
 
                 return;
             }
@@ -222,11 +221,11 @@ public class Physics {
      */
     public void removeCollider(Collider value) {
 
-        for (int i = 0; i < layers.size(); i++) {
+        for (PhysicsLayer layer : layers) {
 
-            if(layers.get(i).contains(value)) {
+            if (layer.contains(value)) {
 
-                layers.get(i).removeCollider(value);
+                layer.removeCollider(value);
             }
         }
     }

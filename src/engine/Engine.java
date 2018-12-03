@@ -14,12 +14,12 @@ import java.awt.event.KeyEvent;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.11.14
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class Engine {
 
-    public static Engine instance;
+    private static Engine instance;
 
     private int targetFrameRate = 60;
     private long startupTime;
@@ -63,7 +63,7 @@ public class Engine {
 
             input.update();
 
-            if(input.getKey(KeyEvent.VK_ESCAPE)) {
+            if(Input.getKey(KeyEvent.VK_ESCAPE)) {
 
                 isRunning = false;
             }
@@ -73,7 +73,7 @@ public class Engine {
 
             if(ecoRenderingMode) {
 
-                if(input.hasInput()) {
+                if(Input.hasInput()) {
 
                     softwareRenderer.update();
                 }

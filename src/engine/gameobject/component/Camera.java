@@ -5,15 +5,12 @@ import engine.Vector2;
 import engine.Vector3;
 import engine.gameobject.GameObject;
 
-import java.util.ArrayList;
-
 public class Camera implements Component {
 
     private float orthographicSize;
     private int renderPriority;
     private float nearClippingPlane;
     private float farClippingPlane;
-    private ArrayList<SpriteRenderer> spriteList;
     private GameObject gameObject;
     private Vector2 minRenderArea;
     private Vector2 maxRenderArea;
@@ -31,7 +28,7 @@ public class Camera implements Component {
         minRenderArea = Vector2.zero();
         maxRenderArea = Vector2.one();
 
-        Engine.getInstance().getRenderer().setActiveCamera(this);
+        Engine.getInstance().getRenderer().addCamera(this);
 
         computeAspectRatio();
         computeVerticalSpriteSizeTarget();
@@ -129,9 +126,7 @@ public class Camera implements Component {
     @Override
     public void destroy() {
 
-        spriteList.clear();
-        spriteList = null;
         gameObject = null;
-        Engine.getInstance().getRenderer().setActiveCamera(null);
+        Engine.getInstance().getRenderer().removeCamera(this);
     }
 }

@@ -1,6 +1,7 @@
 package engine.physics;
 
 import engine.gameobject.component.Collider;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * <p>
  *
  * @author  Raitoning
- * @version 2018.11.14
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class PhysicsLayer {
@@ -21,7 +22,7 @@ public class PhysicsLayer {
      *
      * @param name The desired name for the new PhysicsLayer.
      */
-    public PhysicsLayer(String name) {
+    PhysicsLayer(String name) {
 
         this.name = name;
         colliders = new ArrayList<>();
@@ -50,7 +51,7 @@ public class PhysicsLayer {
      * @param index The index of the Collider.
      * @return The Collider.
      */
-    public Collider getCollider(int index) {
+    Collider getCollider(int index) {
 
     return colliders.get(index);
     }
@@ -59,7 +60,7 @@ public class PhysicsLayer {
      *
      * @param value The Collider to add.
      */
-    public void addCollider(Collider value) {
+    void addCollider(Collider value) {
 
         colliders.add(value);
     }
@@ -69,7 +70,7 @@ public class PhysicsLayer {
      * @param value The Collider to check.
      * @return True if the layers contains the Collider, else if it doesn't.
      */
-    public boolean contains(Collider value) {
+    boolean contains(Collider value) {
 
         return colliders.contains(value);
     }
@@ -78,11 +79,8 @@ public class PhysicsLayer {
      *
      * @param value The Collider to remove.
      */
-    public void removeCollider(Collider value) {
+    void removeCollider(Collider value) {
 
-        if (colliders.contains(value)) {
-
-            colliders.remove(value);
-        }
+        colliders.remove(value);
     }
 }

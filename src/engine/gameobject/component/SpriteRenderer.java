@@ -8,7 +8,7 @@ import engine.gameobject.GameObject;
  * A component used to add a sprite to a GameObject and displays it.
  *
  * @author  Raitoning
- * @version 2018.11.26
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class SpriteRenderer implements Component {
@@ -31,7 +31,7 @@ public class SpriteRenderer implements Component {
 
     /** Return the GameObject this Component is attached to.
      *
-     * @return
+     * @return the GameObject this Component is attached to.
      */
     public GameObject getGameObject() {
 

@@ -22,7 +22,7 @@ import java.util.Arrays;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.11.22
+ * @version 2018.12.03
  * @since   2018.11.14
  */
 public class SoftwareRenderer {
@@ -61,8 +61,8 @@ public class SoftwareRenderer {
         window.setSize(width, height);
         window.setVisible(true);
 
-        window.addKeyListener(Input.getInstance().getKeyboardInput());
-        window.getContentPane().addMouseListener(Input.getInstance().getMouseInput());
+        window.addKeyListener(Input.getKeyboardInput());
+        window.getContentPane().addMouseListener(Input.getMouseInput());
         sprites = new ArrayList<>();
         renderQueue = new ArrayList<>();
         cameras = new ArrayList<>();
@@ -124,19 +124,19 @@ public class SoftwareRenderer {
          SpriteRenderer sprite;
          Transform transform;
 
-        for (int i = 0; i < sprites.size(); i++) {
+        for (SpriteRenderer spriteRenderer : sprites) {
 
-            sprite = sprites.get(i);
+            sprite = spriteRenderer;
             transform = sprite.getGameObject().getTransform();
 
-            if( transform.position().getX() + transform.scale().getX() >= -((activeCamera.getOrthographicSize() * activeCamera.getAspectRatio()) / 2)+ activeCamera.getGameObject().getTransform().position().getX() && transform.position().getX() - transform.scale().getX() <= ((activeCamera.getOrthographicSize() * activeCamera.getAspectRatio())/ 2) + activeCamera.getGameObject().getTransform().position().getX()) {
+            if (transform.position().getX() + transform.scale().getX() >= -((activeCamera.getOrthographicSize() * activeCamera.getAspectRatio()) / 2) + activeCamera.getGameObject().getTransform().position().getX() && transform.position().getX() - transform.scale().getX() <= ((activeCamera.getOrthographicSize() * activeCamera.getAspectRatio()) / 2) + activeCamera.getGameObject().getTransform().position().getX()) {
 
 
-                if(transform.position().getY() + transform.scale().getY() >= -(activeCamera.getOrthographicSize() / 2)+ activeCamera.getGameObject().getTransform().position().getY() && transform.position().getY() - transform.scale().getY() <= (activeCamera.getOrthographicSize() /2)+ activeCamera.getGameObject().getTransform().position().getY()) {
+                if (transform.position().getY() + transform.scale().getY() >= -(activeCamera.getOrthographicSize() / 2) + activeCamera.getGameObject().getTransform().position().getY() && transform.position().getY() - transform.scale().getY() <= (activeCamera.getOrthographicSize() / 2) + activeCamera.getGameObject().getTransform().position().getY()) {
 
-                    if(transform.position().getZ() >= activeCamera.getNearClippingPlane() && transform.position().getZ() <= activeCamera.getFarClippingPlane()) {
+                    if (transform.position().getZ() >= activeCamera.getNearClippingPlane() && transform.position().getZ() <= activeCamera.getFarClippingPlane()) {
 
-                    renderQueue.add(sprite);
+                        renderQueue.add(sprite);
                     }
                 }
             }
@@ -173,10 +173,7 @@ public class SoftwareRenderer {
      */
     public void removeSpriteFromQueue(SpriteRenderer sprite) {
 
-        if(sprites.contains(sprite)) {
-
-            sprites.remove(sprite);
-        }
+        sprites.remove(sprite);
     }
 
     /** Get the aspect ratio of the rendering zone.
@@ -190,7 +187,7 @@ public class SoftwareRenderer {
 
     /** Get the vertical size targeted when rescaling sprites.
      *
-     * @return
+     * @return The target size for sprites for the current rendering camera.
      */
     public float getVerticalSpriteSizeTarget() {
 
@@ -206,15 +203,31 @@ public class SoftwareRenderer {
         return activeCamera;
     }
 
+    public Camera getCamera(int index) {
+
+        return cameras.get(index);
+    }
+
+    public int getNumberOfCameras() {
+
+        return cameras.size();
+    }
+
     /** Set the activeCamera used to render its content.
      *
-     * @param activeCamera The activeCamera to use for rendering.
+     * @param camera The activeCamera to use for rendering.
      */
-    public void setActiveCamera(Camera activeCamera) {
+    public void addCamera(Camera camera) {
 
-        this.activeCamera = activeCamera;
+        if(!cameras.contains(camera)) {
 
-        cameras.add(activeCamera);
+            cameras.add(camera);
+        }
+    }
+
+    public void removeCamera(Camera camera) {
+
+        cameras.remove(camera);
     }
 
     /** Get the width of the rendering zone.

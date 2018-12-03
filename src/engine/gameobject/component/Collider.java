@@ -2,14 +2,15 @@ package engine.gameobject.component;
 
 import engine.Engine;
 import engine.gameobject.GameObject;
+import engine.physics.Physics;
 
 public abstract class Collider implements Component {
 
-    protected GameObject gameObject;
-    protected boolean isStatic;
-    protected boolean isTrigger;
+    private GameObject gameObject;
+    private boolean isStatic;
+    private boolean isTrigger;
 
-    public Collider(String layerName, GameObject gameObject) {
+    Collider(String layerName, GameObject gameObject) {
 
         this.gameObject = gameObject;
         Engine.getInstance().getPhysics().addCollider(this, layerName);
@@ -55,6 +56,7 @@ public abstract class Collider implements Component {
     @Override
     public void destroy() {
 
-        Engine.getInstance().getPhysics().removeCollider(this);
+        Physics.getInstance().removeCollider(this);
+        gameObject = null;
     }
 }
