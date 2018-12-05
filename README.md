@@ -3,18 +3,17 @@
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !   
 ## Development phase: PRE-ALPHA
 
-## Engine version: 18.12.03
+## Engine version: 18.12.05
 ## Version notes:
-* Adapted the click raycast mechanism to work with multiple cameras.
-* Code cleanup.
+* Started the work on RMI networking, the RMI classes are marked deprecated as it doesn't work yet.
 
 # ROADMAP:
 - [x] Adapting the GraphicRaycaster Component to the multiple camera system.
 - [x] Adding a layering system for multiple cameras.
+- [ ] Adding an RMI networking system for networked multiplayer games.
 - [ ] Adding a Scene system similar to Unity.
 - [ ] Adding a Collision Matrix to get better control over physics simulations.
 - [ ] Adding an Audio subsystem.
-
 
 Welcome to Namaeless Studio's Mini Java Game Engine official repository !  
 Here you will find the lastest released version of the game engine.  
