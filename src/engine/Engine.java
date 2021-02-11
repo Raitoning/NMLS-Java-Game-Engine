@@ -1,5 +1,6 @@
 package engine;
 
+import engine.audio.Audio;
 import engine.input.Input;
 import engine.physics.Physics;
 import engine.rendering.SoftwareRenderer;
@@ -33,6 +34,7 @@ public class Engine {
     private Game game;
     private Physics physics;
     private Input input;
+    private Audio audio;
 
     private Engine() {
 
@@ -44,6 +46,7 @@ public class Engine {
 
         input = Input.getInstance();
         physics = Physics.getInstance();
+        audio = Audio.getInstance();
 
         softwareRenderer = new SoftwareRenderer(1280,720);
 
