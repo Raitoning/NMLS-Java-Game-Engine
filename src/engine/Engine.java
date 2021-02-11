@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
  * </p>
  *
  * @author  Raitoning
- * @version 2018.12.03
+ * @version 2021.02.11
  * @since   2018.11.14
  */
 public class Engine {
@@ -73,6 +73,7 @@ public class Engine {
 
             game.update();
             physics.update();
+            audio.update();
 
             if(ecoRenderingMode) {
 
@@ -102,7 +103,7 @@ public class Engine {
 
             Time.deltaTime = nanoTimeToFloat() - Time.frameStartTime;
 
-//             System.out.println("FPS: " + ((float)1/Time.deltaTime) + " Frametime: " + Time.deltaTime * 1000 + "ms");
+             // System.out.println("FPS: " + ((float)1/Time.deltaTime) + " Frametime: " + Time.deltaTime * 1000 + "ms");
         }
 
         System.exit(0);
@@ -157,5 +158,14 @@ public class Engine {
     public Game getGame() {
 
         return game;
+    }
+
+    /** Get the Audio instance.
+     *
+     * @return The running AUdio instance, or instanciates a new one.
+     */
+    public Audio getAudio()
+    {
+        return audio;
     }
 }
