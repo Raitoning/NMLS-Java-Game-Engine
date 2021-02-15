@@ -1,11 +1,15 @@
 package engine;
 
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import engine.exception.UnreferencedSoundException;
 
-import java.io.File;
-import java.io.InputStream;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * <h1>SoundFactory</h1>
@@ -16,7 +20,7 @@ import java.util.ArrayList;
  * </p>
  *
  * @author  Raitoning
- * @version 2021.12.03
+ * @version 2021.02.15
  * @since   2021.12.03
  */
 public class SoundFactory {
@@ -37,7 +41,7 @@ public class SoundFactory {
      * @param name The desired name for the sound.
      * @param path The path to the file containing the sound.
      */
-        void addSound(String name, String path) {
+    void addSound(String name, String path) {
 
         fileReferences.add(new FileReference(name, path));
     }
@@ -66,6 +70,51 @@ public class SoundFactory {
 
                 sounds.add(new SoundReference(name, fileReference.getPath()));
                 return getSound(name);
+            }
+        }
+
+        // if not referenced, throw an exception and return null
+        try {
+            throw new UnreferencedSoundException(name);
+        } catch (UnreferencedSoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public byte[] getAudioData (String name) {
+
+        for (SoundReference sound: sounds)
+        {
+            if (sound.getName().equals(name))
+            {
+                InputStream input = null;
+                try {
+                    input = new FileInputStream(sound.getSound());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                int fileSize = (int)sound.getSound().length();
+                byte[] soundData = new byte[fileSize];
+                try {
+                    input.read(soundData);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return soundData;
+            }
+        }
+
+        // if not already loaded, check if it's referenced and load it
+        for (FileReference fileReference : fileReferences) {
+
+            if (fileReference.getName().equals(name)) {
+
+                sounds.add(new SoundReference(name, fileReference.getPath()));
+                return getAudioData(name);
             }
         }
 

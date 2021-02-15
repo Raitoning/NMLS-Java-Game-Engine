@@ -1,12 +1,9 @@
 package engine.audio;
 
-import engine.SoundFactory;
-import engine.Time;
 import engine.gameobject.component.AudioSource;
-import sun.audio.AudioPlayer;
 
 import javax.sound.sampled.*;
-import java.applet.AudioClip;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,7 +15,7 @@ import java.util.*;
  * </p>
  *
  * @author  Raitoning
- * @version 2021.02.11
+ * @version 2021.02.15
  * @since   2021.02.11
  */
 public class Audio {
@@ -26,56 +23,61 @@ public class Audio {
     public static Audio instance;
     private ArrayList<AudioSource> audioSources;
 
-    private HashMap<AudioSource, Float> sourcesTime;
     private HashMap<AudioSource, Clip> sourcesVoices;
-
-    private final int MAX_VOICES = 32;
-    private int activeVoices = 0;
 
     private Audio() {
 
         audioSources = new ArrayList<>();
-        sourcesTime = new HashMap<AudioSource, Float>();
         sourcesVoices = new HashMap<AudioSource, Clip>();
     }
 
-    /** This function is called once every frame and gather all inputs from the keyboard and the mouse and stock them.
-     *
-     */
     public void update() {
 
-        for (AudioSource source: audioSources)
-        {
-            if (source.isToPlay())
-            {
-                System.out.println(source.getName());
-                if (source.isPlaying())
+        for (AudioSource source: audioSources) {
+
+            if (source.isToPlay()) {
+
+                if (sourcesVoices.containsKey(source))
                 {
-                    sourcesVoices.get(source).stop();
-                    sourcesVoices.get(source).close();
-                    source.setPlaying(false);
+                    sourcesVoices.get(source).setFramePosition(0);
                 }
+                else
+                {
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(source.getSoundData());
 
-
-                DataLine.Info info = new DataLine.Info(Clip.class, source.getFormat());
-
-                try {
-                    Clip clip = (Clip) AudioSystem.getLine(info);
-
-                    clip.open(source.getStream());
-
-                    clip.start();
-                    activeVoices++;
-
-                    sourcesTime.put(source, Time.frameStartTime);
-                    sourcesVoices.put(source, clip);
-                    source.setPlaying(true);
-                } catch (LineUnavailableException | IOException e) {
+                    AudioInputStream audioStream = null;
+                    try {
+                        audioStream = AudioSystem.getAudioInputStream(inputStream);
+                    } catch (UnsupportedAudioFileException e) {
                         e.printStackTrace();
-                }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                source.Stop();
+                    DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
+
+                    Clip clip = null;
+
+                    try {
+                        clip = (Clip) AudioSystem.getLine(info);
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        clip.open(audioStream);
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    sourcesVoices.put(source, clip);
+                    clip.start();
+                }
             }
+
+            source.Stop();
         }
 
     }

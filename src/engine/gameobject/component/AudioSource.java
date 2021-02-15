@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 /**
@@ -18,7 +19,7 @@ import java.io.IOException;
  * </p>
  *
  * @author  Raitoning
- * @version 2021.02.11
+ * @version 2021.02.15
  * @since   2021.02.11
  */
 public class AudioSource implements Component {
@@ -28,28 +29,20 @@ public class AudioSource implements Component {
 
     private boolean toPlay = false;
     private boolean playing = false;
-    private AudioInputStream stream;
+    private byte[] soundData;
     private AudioFormat format;
+
 
     /** Creates a new AudioSource given the name of the sound to use.
      *
      * @param name Name of the sound to play.
      * @param gameObject The GameObject this Component is attached to.
      */
-    public AudioSource (String name, GameObject gameObject)
-    {
+    public AudioSource (String name, GameObject gameObject) {
         this.gameObject = gameObject;
         this.name = name;
 
-        try {
-            stream = AudioSystem.getAudioInputStream(SoundFactory.getInstance().getSound(name));
-
-            format = stream.getFormat();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        soundData = SoundFactory.getInstance().getAudioData(name);
 
         Engine.getInstance().getAudio().addAudioSource(this);
     }
@@ -89,18 +82,27 @@ public class AudioSource implements Component {
         name = value;
     }
 
-    public AudioInputStream getStream()
-    {
+    public AudioInputStream getStream() {
 
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(soundData);
+        AudioInputStream stream = null;
         try {
-            stream = AudioSystem.getAudioInputStream(SoundFactory.getInstance().getSound(name));
+            stream = AudioSystem.getAudioInputStream(byteStream);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        format = stream.getFormat();
+
+        System.out.println(format);
         return stream;
+    }
+
+    public byte[] getSoundData()
+    {
+        return soundData;
     }
 
     public AudioFormat getFormat()

@@ -3,18 +3,18 @@
 ## Engine status: IN DEVELOPMENT, NOT PRODUCTION READY !
 ## Development phase: PRE-ALPHA
 
-## Engine version: 21.02.11.1
+## Engine version: 21.02.15
 ## Version notes:
-* Added a complete audio system.
+* Enhanced the audio system.
 
 ## Known issues:
-- Playing a sound needs to recreate an AudioInputStream, which is very slow.
+- The window can blink due to poor Java performance when redrawing windows.
 
 # ROADMAP:
 - [x] Adapting the GraphicRaycaster Component to the multiple camera system.
 - [x] Adding a layering system for multiple cameras.
 - [x] Adding an Audio subsystem.
-- [ ] Create a resettable AudioClip system.
+- [x] Create a resettable AudioClip system.
 
 Welcome to Namaeless Studio's Mini Java Game Engine official repository !
 Here you will find the lastest released version of the game engine.
